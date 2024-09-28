@@ -19,7 +19,7 @@ type Server struct {
 	db         *pgxpool.Pool
 }
 
-func NewServer(listenAddr string, engine *gin.Engine, db *pgxpool.Pool) *Server {
+func New(listenAddr string, engine *gin.Engine, db *pgxpool.Pool) *Server {
 	return &Server{
 		listenAddr: listenAddr,
 		engine:     engine,

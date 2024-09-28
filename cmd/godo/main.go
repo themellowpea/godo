@@ -29,7 +29,7 @@ func main() {
 	defer dbPool.Close()
 
 	r := gin.Default()
-	server := server.NewServer(*listenAddr, r, dbPool)
+	server := server.New(*listenAddr, r, dbPool)
 	if err := server.Run(); err != nil {
 		log.Fatalf("Server failed: %v", err)
 	}
