@@ -4,14 +4,17 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/themellowpea/godo/internal/db/albums"
 )
 
-type AlbumHandler struct{}
+type AlbumHandler struct {
+	db *pgxpool.Pool
+}
 
-func NewAlbumHandler() *AlbumHandler {
-	return &AlbumHandler{}
+func NewAlbumHandler(db *pgxpool.Pool) *AlbumHandler {
+	return &AlbumHandler{db: db}
 }
 
 func (h *AlbumHandler) GetAllAlbums(c *gin.Context) {

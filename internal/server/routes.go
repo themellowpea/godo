@@ -2,16 +2,19 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/themellowpea/godo/internal/handlers"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type Router struct{}
+type Route interface {
+	RegisterRoutes(router *gin.Engine)
+}
 
-func NewRouter() *gin.Engine {
-	router := gin.Default()
-	albumHandler := handlers.NewAlbumHandler()
+func SetupRoutes(router *gin.Engine, db *pgxpool.Pool) {
+	routes := []Route{
+		NewAlbumRoutes(db),
+	}
 
-	router.GET("/albums", albumHandler.GetAllAlbums)
-
-	return router
+	for _, r := range routes {
+		r.RegisterRoutes(router)
+	}
 }
